@@ -1,0 +1,117 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Estudiante {
+private:
+    string nombre;
+    string apellido;
+    string codigo;
+    string usuario;
+    string clave;
+    string clave_binaria;
+    string llave;
+
+public:
+    Estudiante() {}
+
+    void ingresarDatos() {
+        cout << "Ingrese el nombre del estudiante: ";
+        cin >> nombre;
+        cout << "Ingrese el apellido del estudiante: ";
+        cin >> apellido;
+        cout << "Ingrese el código del estudiante (8 dígitos): ";
+        cin >> codigo;
+
+        // Usuario será el apellido del estudiante
+        usuario = apellido;
+
+        generarClave();
+        convertirClaveABinario();
+        encontrarLlave();
+    }
+
+    void generarClave() {
+        int n;
+        cout << "Ingrese el tamaño de la clave: ";
+        cin >> n;
+        clave = "";
+
+        int intentos = 0;
+
+        do {
+            cout << "Ingrese la clave (debe contener solo letras mayúsculas, minúsculas y dígitos): ";
+            cin >> clave;
+
+            if (clave.length() != n) {
+                cout << "La clave debe tener " << n << " caracteres. Intente de nuevo.\n";
+                clave = "";
+                intentos++;
+            } else {
+                bool valido = true;
+                for (char c : clave) {
+                    if (!isalnum(c)) {
+                        valido = false;
+                        break;
+                    }
+                }
+
+                if (!valido) {
+                    cout << "La clave contiene caracteres inválidos. Intente de nuevo.\n";
+                    clave = "";
+                    intentos++;
+                }
+            }
+
+            if (intentos == 3) {
+                cout << "Ha excedido el número máximo de intentos. Fin del programa.\n";
+                exit(1);
+            }
+        } while (clave.empty());
+    }
+
+    void convertirClaveABinario() {
+        clave_binaria = "";
+        for (char c : clave) {
+            if (isalpha(c)) {
+                if (toupper(c) == 'A' || toupper(c) == 'C' || isdigit(c)) {
+                    clave_binaria += "1";
+                } else {
+                    clave_binaria += "0";
+                }
+            }
+        }
+    }
+
+    void encontrarLlave() {
+        llave = "";
+        for (char c : clave_binaria) {
+            if (c == '0') {
+                llave += "00";
+            } else {
+                llave += "11";
+            }
+        }
+    }
+
+    void imprimirDatos() {
+        cout << "Nombre: " << nombre << "\n";
+        cout << "Apellido: " << apellido << "\n";
+        cout << "Código: " << codigo << "\n";
+        cout << "Usuario: " << usuario << "\n";
+        cout << "Clave: " << clave << "\n";
+        cout << "Clave binaria: " << clave_binaria << "\n";
+        cout << "Llave: " << llave << "\n";
+    }
+};
+
+int main() {
+    Estudiante estudiante;
+    estudiante.ingresarDatos();
+    estudiante.imprimirDatos();
+
+    return 0;
+}

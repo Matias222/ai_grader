@@ -1,0 +1,125 @@
+#include <iostream>
+#include <string>
+
+class Clave {
+private:
+    std::string clave;
+    std::string claveBinaria;
+
+    // Función para convertir la clave a binario según la lógica dada
+    std::string convertirABinario() {
+        std::string binario = "";
+        bool par = false;
+
+        for (char c : clave) {
+            if (isalpha(c)) {
+                if (tolower(c) == 'a' || tolower(c) == 'c' || tolower(c) == 'e' || tolower(c) == 'g' || tolower(c) == 'i' || tolower(c) == 'k' ||
+                    tolower(c) == 'm' || tolower(c) == 'o' || tolower(c) == 'q' || tolower(c) == 's' || tolower(c) == 'u' || tolower(c) == 'w' ||
+                    tolower(c) == 'y') {
+                    binario += (par ? '0' : '1');
+                } else {
+                    binario += (par ? '1' : '0');
+                }
+                par = !par;
+            }
+        }
+        return binario;
+    }
+
+public:
+    void ingresarClave() {
+        int intentos = 3;
+        while (intentos > 0) {
+            std::cout << "Ingrese la clave: ";
+            std::cin >> clave;
+
+            claveBinaria = convertirABinario();
+
+            if (claveBinaria.length() > 0) {
+                std::cout << "Clave binaria generada: " << claveBinaria << std::endl;
+                break;
+            } else {
+                std::cout << "Clave incorrecta. Intente de nuevo." << std::endl;
+                intentos--;
+                if (intentos == 0) {
+                    std::cout << "Se agotaron los intentos. Reinicie el programa para volver a intentarlo." << std::endl;
+                    break;
+                }
+            }
+        }
+    }
+
+    std::string obtenerClaveBinaria() const {
+        return claveBinaria;
+    }
+};
+
+class Llave {
+private:
+    std::string llave;
+
+    // Función para generar la llave según la lógica dada
+    std::string generarLlave(const std::string& claveBinaria) {
+        std::string nuevaLlave = "";
+
+        for (char c : claveBinaria) {
+            if (c == '0') {
+                nuevaLlave += "00";
+            } else if (c == '1') {
+                nuevaLlave += "11";
+            }
+        }
+        return nuevaLlave;
+    }
+
+public:
+    void generarDesdeClave(const std::string& claveBinaria) {
+        llave = generarLlave(claveBinaria);
+    }
+
+    std::string obtenerLlave() const {
+        return llave;
+    }
+};
+
+class Estudiante {
+private:
+    std::string nombre;
+    std::string apellido;
+    std::string codigo;
+    std::string usuario;
+    Clave clave;
+    Llave llave;
+
+public:
+    void ingresarDatos() {
+        std::cout << "Ingrese el nombre: ";
+        std::cin >> nombre;
+        std::cout << "Ingrese el apellido: ";
+        std::cin >> apellido;
+        std::cout << "Ingrese el código (de 8 dígitos): ";
+        std::cin >> codigo;
+
+        usuario = apellido; // El usuario será el apellido del estudiante
+        clave.ingresarClave(); // Ingresar y generar clave binaria
+        llave.generarDesdeClave(clave.obtenerClaveBinaria()); // Generar la llave desde la clave binaria
+    }
+
+    void mostrarDatos() const {
+        std::cout << "\nDatos del estudiante:\n";
+        std::cout << "Nombre: " << nombre << std::endl;
+        std::cout << "Apellido: " << apellido << std::endl;
+        std::cout << "Código: " << codigo << std::endl;
+        std::cout << "Usuario: " << usuario << std::endl;
+        std::cout << "Clave original: " << clave.obtenerClaveBinaria() << std::endl;
+        std::cout << "Llave generada: " << llave.obtenerLlave() << std::endl;
+    }
+};
+
+int main() {
+    Estudiante estudiante;
+    estudiante.ingresarDatos();
+    estudiante.mostrarDatos();
+
+    return 0;
+}

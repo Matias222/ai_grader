@@ -1,0 +1,162 @@
+#include <iostream>
+
+using namespace std;
+
+bool isValido(string clave,int tamanio){
+    bool minus = false;
+    bool mayus = false;
+    bool digit = false;
+    bool igualTamanio = false;
+
+    for(int i=0;i<clave.size();i++){
+        if (islower(clave[i])) minus=true;
+        else if (isupper(clave[i])) mayus=true;
+        else if (isdigit(clave[i])) digit=true;
+    }
+
+    if (tamanio==clave.size()) igualTamanio=true;
+
+    if(minus==true && mayus==true && digit==true && igualTamanio==true) return true;
+
+    return false;
+}
+
+string convertirClave(string &clave){
+    string claveBinaria="";
+    for (int i=0;i<clave.size();i++){
+        if (clave[i]%2==0){
+            claveBinaria+='0';
+        }
+        else if(clave[i]%2==1){
+            claveBinaria+='1';
+        }
+    }
+    clave=claveBinaria;
+    return claveBinaria;
+}
+
+string llave(string claveBinaria){
+    string llave="";
+    for (int i=0;i<claveBinaria.size();i++){
+        if(claveBinaria[i]=='0') llave+="11";
+        else llave+="00";
+    }
+    return llave;
+}
+
+class Clave{
+private:
+    string clave;
+    string binario;
+    string llave;
+public:
+    Clave(string clave){
+        this->clave=clave;
+        this->binario= convertirClave(clave);
+        this->llave="";
+    }
+    const string &getClave() const {
+        return this->clave;
+    }
+    const string &getBinario() const {
+        return this->binario;
+    }
+    const string &getLlave() const {
+        return this->llave;
+    }
+    void setClave(const string &clave) {
+        this->clave = clave;
+    }
+    void setLlave(){
+        this->llave="";
+        for (int i=0;i<this->binario.size();i++){
+            if(this->binario[i]=='0') llave+="11";
+            else llave+="00";
+        }
+    }
+};
+
+class Estudiante{
+private:
+    string nombre;
+    string apellido;
+    int codigo;
+    string usuario;
+    Clave *pclave;
+public:
+    Estudiante(string nombre, string apellido, int codigo){
+        this->nombre=nombre;
+        this->apellido=apellido;
+        this->codigo=codigo;
+        this->usuario=apellido;
+    }
+    const string &getNombre() const {
+        return this->nombre;
+    }
+    const string &getApellido() const {
+        return this->apellido;
+    }
+    const int &getCodigo() const {
+        return this->codigo;
+    }
+    void setNombre(const string &nombre) {
+        this->nombre = nombre;
+    }
+    void setApellido(const string &apellido) {
+        this->apellido = apellido;
+    }
+    void setCodigo(const int &codigo) {
+        this->codigo = codigo;
+    }
+    const string &getUsuario() const {
+        return usuario;
+    }
+    Clave *getPclave() const {
+        return pclave;
+    }
+    void setPclave(Clave *pclave) {
+        this->pclave = pclave;
+    }
+};
+
+
+int main() {
+    string nombre, apellido,clave,claveBinaria,llave;
+    int codigo,i=0,tamanio;
+    cout<<"Nombre: ";cin>>nombre;
+    cout<<"Apellido: ";cin>>apellido;
+    cout<<"Codigo: ";cin>>codigo;
+    Estudiante E1(nombre,apellido,codigo);
+    cout<<"Ingrese tamanio de su clave: ";cin>>tamanio;
+    cout<<"Escriba su clave: ";cin>>clave;
+    while (isValido(clave,tamanio)==false){
+        if(i==2) return 0;
+        i++;
+        cout<<"Escriba su clave correctamente: ";cin>>clave;
+    }
+    Clave C(clave);
+    C.setLlave();
+    E1.setPclave(&C);
+    cout<<"Clave binaria: "<<E1.getPclave()->getBinario()<<endl;
+    string vClave;
+
+    do{
+        cout<<"Verificacion: "<<endl;
+        cout<<"Confirme su clave: ";cin>>vClave;
+        if(vClave!=E1.getPclave()->getClave()) cout<<"Clave incorrecta"<<endl;
+        else cout<<"Clave confirmada"<<endl;
+    }while(vClave!=E1.getPclave()->getClave());
+
+    cout<<"Llave generada "<<E1.getPclave()->getLlave()<<endl;
+    cout<<"------------------------------------------------"<<endl;
+    cout<<"\tDATOS\t"<<endl;
+    cout<<"Nombre: " <<E1.getNombre()<<endl;
+    cout<<"Apellido: "<<E1.getApellido()<<endl;
+    cout<<"Usuario: "<<E1.getUsuario()<<endl;
+    cout<<"Codigo: "<<E1.getCodigo()<<endl;
+    cout<<"Clave: "<<E1.getPclave()->getBinario()<<endl;
+    cout<<"Llave: "<<E1.getPclave()->getLlave()<<endl;
+
+    return 0;
+}
+//Elaborado por José María Gamero Ponce - Teoría 1

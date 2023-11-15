@@ -1,0 +1,47 @@
+Evalua el siguiente codigo de C++ en un escala del 0 al 3, teniendo en cuenta el siguiente criterio:
+
+Algoritmo (1 punto):
+
+Calificacion 1: El algoritmo resuelve el problema.
+Calificacion 0.5: El algoritmo parcialmente resuelve el problema.
+Calificacion 0: El algoritmo no resuelve el problema o esta fundamentalmente erroneo.
+
+Codigo (1.5 puntos):
+
+Calificacion 1.5: El codigo es correcto, sin errores de sintaxis e implementa correctamente el algoritmo.
+Calificacion 1: El codigo posee algunos errores semanticos o sintacticos o resuelve parcialmente el problema.
+Calificacion 0: El codigo es fatalmente incorrecto.
+
+Eficiencia (0.5 puntos):
+
+Calificacion 0.5: La solucion es eficiente y sigue buenas practicas de practicas programacion.
+Calificacion 0.3: Solución es optimizable o resuelve parcialmente el problema.
+Calificacion 0: Solución no es eficiente.
+
+Porfavor devuelve el puntaje total junto a las calificaciones para cada criterio (algoritmo, codigo y eficiencia) e incluye comentarios para soportar cada nota asignada en cada criterio, al final da una lista de mejoras que se podrian realizar.
+
+Enunciado del problema ->
+
+Escriba un programa en C++ utilizando clases y objetos que permita ingresar los datos de un estudiante: 
+
+-Nombre
+-Apellido
+-Codigo (8 digitos)
+-Usuario
+-Largo de la clave
+-Clave (una combinacion de letras minusculas, mayusculas y digitos)
+
+Ademas dada la clave generar una secuencia de binarios, siguiendo las siguientes reglas.
+
+-Las letras si su caracter en ASCII es impar sera 1, caso contrario 0
+-Los numeros si son pares 0, caso contrario 1
+
+Por ejemplo, si la clave generada es aB2cBa1, la clave binaria generada sera 1001011
+
+Si la clave no tiene alguna de las condiciones senaladas, se pedira ingresarla de nuevo. Solo se tienen 3 opciones para ingresar la clave correctamente. Luego de ingresar la clave correctamente, el programa pedira confirmar la clave, ingresandola una vez mas. Ahora defina un metodo para encontrar una llave que corresponda a la clave creada. Esta tendra el doble de digitos que la clave original, y contendra dos 1s si la clave tiene un 0, o dos 0s si la clave tiene un 1. Para el ejemplo anterior, la llave sera 00111100110000. Se debe, finalmente imprimir los datos del estudiante, incluyendo la cadena de caracteres original, la clave y llave generadas.
+
+Utilice una forma de relaciones entre clases discutidas en clase (asociacion, agregacion o composicion)
+
+C++ Code -> {}
+Es esencial que recuerdes verificar que la cadenas binarias estan bien formuladas
+Answer -> 

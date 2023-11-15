@@ -1,0 +1,171 @@
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Estudiante {
+private:
+    string nombre;
+    string apellido;
+    string codigo;
+    string usuario;
+    int c_largo;
+
+public:
+    Estudiante() {
+        c_largo = 0;
+    }
+
+    void setNombre(string n) {
+        nombre = n;
+    }
+
+    void setApellido(string a) {
+        apellido = a;
+        usuario = a;
+    }
+
+    void setCodigo(string c) {
+        codigo = c;
+    }
+
+    void setCLargo(int cl) {
+        c_largo = cl;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    string getApellido() {
+        return apellido;
+    }
+
+    string getCodigo() {
+        return codigo;
+    }
+
+    string getUsuario() {
+        return usuario;
+    }
+
+
+};
+
+class ManejadorClaves {
+public:
+    string crearClave(int c_largo) {
+        string clave;
+        int intentos = 0;
+
+        while (intentos < 3) {
+            cout << "Ingrese una clave: ";
+            cin >> clave;
+
+            if (clave.length() != c_largo or !cumpleRequisitos(clave)) {
+                cout << "La clave no cumple con los requisitos. " << endl;
+                intentos++;
+                cout << "Intentos restantes: " << 3 - intentos << endl;
+            } else {
+                return clave;
+            }
+        }
+
+        cout << "Ha agotado los intentos para ingresar la clave correctamente." << endl;
+        exit(1);
+    }
+
+    bool cumpleRequisitos(string clave) {
+        bool tieneMayuscula = false;
+        bool tieneMinuscula = false;
+        bool tieneNumero = false;
+
+        for (char c : clave) {
+            if (isupper(c)) {
+                tieneMayuscula = true;
+            } else if (islower(c)) {
+                tieneMinuscula = true;
+            } else if (isdigit(c)) {
+                tieneNumero = true;
+            }
+        }
+
+        return tieneMayuscula and tieneMinuscula and tieneNumero;
+    }
+
+    string convertirClaveABinario(string clave) {
+        string binario;
+        int c_largo = clave.length();
+
+        for (int i = 0; i < c_largo; i++) {
+            char c = clave[i];
+
+            if (c % 2 == 1) {
+                binario += '1';
+            } else {
+                binario += '0';
+            }
+        }
+        return binario;
+    }
+
+
+
+    string encontrarLlave(string binario) {
+        string llave;
+        for (char c : binario) {
+            if (c == '1') {
+                llave += "00";
+            } else {
+                llave += "11";
+            }
+        }
+        return llave;
+    }
+
+
+};
+
+int main() {
+    Estudiante estudiante;
+    ManejadorClaves manejadorClaves;
+
+    string nombre, apellido;
+    int c_largo;
+    string codigo;
+
+    cout << "Ingrese el nombre del estudiante: ";
+    cin >> nombre;
+    estudiante.setNombre(nombre);
+
+    cout << "Ingrese el apellido del estudiante: ";
+    cin >> apellido;
+    estudiante.setApellido(apellido);
+
+
+    while(codigo.length() != 8){
+        cout << "Ingrese el código del estudiante (8 dígitos): ";
+        cin >> codigo;
+    }
+    estudiante.setCodigo(codigo);
+
+    cout << "Ingrese la longitud de la clave: ";
+    cin >> c_largo;
+    estudiante.setCLargo(c_largo);
+
+    string clave = manejadorClaves.crearClave(c_largo);
+    string binario = manejadorClaves.convertirClaveABinario(clave);
+    string llave = manejadorClaves.encontrarLlave(binario);
+
+    cout << "\nDatos del estudiante:" << endl;
+    cout << "Nombre: " << estudiante.getNombre() << endl;
+    cout << "Apellido: " << estudiante.getApellido() << endl;
+    cout << "Código: " << estudiante.getCodigo() << endl;
+    cout << "Usuario: " << estudiante.getUsuario() << endl;
+    cout << "Clave: " << clave << endl;
+    cout << "Clave en binario: " << binario << endl;
+    cout << "Llave: " << llave << endl;
+
+    return 0;
+}

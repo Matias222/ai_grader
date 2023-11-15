@@ -1,0 +1,10 @@
+Algoritmo (1 punto): 1
+El algoritmo resuelve el problema tal como se describe en el enunciado. Se implementan las funcionalidades de ingreso de datos del estudiante, verificación de la clave, conversión de la clave a binario y generación de la llave.
+
+Código (1.5 puntos): 1.5
+El código está correctamente escrito, sin errores de sintaxis. Implementa correctamente el algoritmo y sigue las buenas prácticas de programación en C++. Se utilizan clases y objetos, y se hace uso de la composición al incluir un objeto de la clase Clave dentro de la clase DatosAlumno.
+
+Eficiencia (0.5 puntos): 0.5
+La solución es eficiente. Se utilizan buenas prácticas de programación, como la reutilización de código a través de funciones y la encapsulación de datos en clases. Además, la solución no realiza operaciones innecesarias que podrían ralentizar el programa.
+
+Puntaje total: 3

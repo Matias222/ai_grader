@@ -1,0 +1,132 @@
+
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std
+
+class ClaveUtil {
+public:
+    static string convertirClaveABinario(const string &clave) {
+        string claveBinaria;
+        for (char c : clave) {
+            if (isalpha(c)) {
+                claveBinaria += (c == 'A' || c == 'a') ? '1' : '0';
+            } else {
+                claveBinaria += (c % 2 == 0) ? '0' : '1';
+            }
+        }
+        return claveBinaria;
+    }
+
+    static string generarLlave(const string &claveBinaria) {
+        string llaveGenerada;
+        for (char c : claveBinaria) {
+            llaveGenerada += c;
+            llaveGenerada += c;
+        }
+        return llaveGenerada;
+    }
+};
+
+class Estudiante {
+private:
+    string nombre;
+    string apellido;
+    string codigo;
+    string usuario;
+    string clave;
+    string llave;
+
+public:
+    void ingresarDatos() {
+        obtenerNombreYApellido();
+        obtenerCodigo();
+        obtenerUsuario();
+        obtenerClave();
+        generarLlave();
+        mostrarDatos();
+    }
+
+private:
+    void obtenerNombreYApellido() {
+        cout << "Ingrese el nombre del estudiante: ";
+        getline(cin, nombre);
+        cout << "Ingrese el apellido del estudiante: ";
+        getline(cin, apellido);
+    }
+
+    void obtenerCodigo() {
+        cout << "Ingrese el código del estudiante (8 dígitos): ";
+        cin >> codigo;
+    }
+
+    void obtenerUsuario() {
+        usuario = apellido;
+    }
+
+    void obtenerClave() {
+        int intentos = 3;
+        while (intentos > 0) {
+            cout << "Ingrese la clave (tamaño n, letras minúsculas, mayúsculas y dígitos): ";
+            cin.ignore();
+            getline(cin, clave);
+
+            if (validarClave(clave)) {
+                break;
+            } else {
+                cout << "La clave no cumple con los requisitos. Intentos restantes: " << (intentos - 1) << endl;
+                intentos--;
+            }
+        }
+
+        if (intentos == 0) {
+            cout << "Se han agotado los intentos para ingresar una clave válida." << endl;
+        }
+    }
+
+    void generarLlave() {
+        string claveBinaria = ClaveUtil::convertirClaveABinario(clave);
+        llave = ClaveUtil::generarLlave(claveBinaria);
+    }
+
+    void mostrarDatos() {
+        cout << "\nDatos del estudiante:\n";
+        cout << "Nombre: " << nombre << endl;
+        cout << "Apellido: " << apellido << endl;
+        cout << "Código: " << codigo << endl;
+        cout << "Usuario: " << usuario << endl;
+        cout << "Clave: " << clave << endl;
+        cout << "Llave Generada: " << llave << endl;
+    }
+
+    bool validarClave(const string &clave) {
+        bool tieneMinuscula = false;
+        bool tieneMayuscula = false;
+        bool tieneDigito = false;
+
+        if (clave.size() < 1) {
+            return false;
+        }
+
+        for (char c : clave) {
+            if (isalnum(c)) {
+                if (islower(c)) {
+                    tieneMinuscula = true;
+                } else if (isupper(c)) {
+                    tieneMayuscula = true;
+                } else if (isdigit(c)) {
+                    tieneDigito = true;
+                }
+            }
+        }
+
+        return tieneMinuscula && tieneMayuscula && tieneDigito;
+    }
+};
+
+int main() {
+    Estudiante estudiante;
+    estudiante.ingresarDatos();
+    return 0;
+}
